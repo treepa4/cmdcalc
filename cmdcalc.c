@@ -26,32 +26,37 @@ int main(int argc, char* argv[]) {
         int key = atoi(argv[argc-1]);
 	//int expr_count = (argc - 3) / 3;
 	int* results = (int*)malloc(sizeof(int) * expr_count);
+
         if (!results) {
         	printf("Ошибка памяти\n");
         	return 1;
         }
 	int idx = 0;
 	for (int i = 1; i < argc - 2; i += 3) {
-		int a = atoi(argv[i]);
-		char* op = argv[i+1];
-		int b = atoi(argv[i+2]);
-		int res;
-		if (strcmp(op, "+") == 0) res = sum(a, b);
-		else if (strcmp(op, "-") == 0) res = sub(a, b);
-		else if (strcmp(op, "*") == 0) res = prod(a, b);
-		else if (strcmp(op, "%") == 0) {
-			if (b == 0) {
-				free(results);
-        		        return 1;
-			}	
-			res = rem(a, b);
-		}
-		else {
-	                ErrorIncorrectInput();
-                	free(results);
-                	return 1;
-            	}
-		results[idx++] = res;
+    		int a = atoi(argv[i]);
+    		int b = atoi(argv[i+2]);
+    		char op = argv[i+1][0];
+   		int res;
+
+    		switch(op) {
+        		case '+': res = sum(a,b); break;
+        		case '-': res = sub(a,b); break;
+        		case '*': res = prod(a,b); break;
+        		case '%': 
+            		if (b == 0) {
+                		printf("Ошибка: Деление на 0!\n");
+                		free(results);
+                		return 1;
+            		}
+            		res = rem(a,b); 
+            		break;
+        		default:
+            		ErrorIncorrectInput();
+            		free(results);
+            		return 1;
+    		}
+
+    		results[idx++] = res;
 	}
 
 	decode_and_print(results, expr_count, key);
