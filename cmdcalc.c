@@ -7,16 +7,24 @@ void ErrorIncorrectInput(){
 	printf("Ошибка: Неверный ввод!");
 }
 int main(int argc, char* argv[]) {
-	if ((argc <= 5) || (strcmp(argv[argc-2], "-k") != 0)) {
+	if (argc < 5) {
 		ErrorIncorrectInput();
 		return 1;
 	}
-        int key = atoi(argv[argc-1]);
+
+	if (strcmp(argv[argc - 2], "-k") != 0) {
+    		ErrorIncorrectInput();
+    		return 1;
+	}
 	int expr_count = (argc - 3) / 3;
-	if ((expr_count * 3) != (argc - 3)) {
-        	ErrorIncorrectInput();
-        	return 1;
-        }
+
+	if ((argc - 3) % 3 != 0) {
+    		ErrorIncorrectInput();
+    		return 1;
+	}
+
+        int key = atoi(argv[argc-1]);
+	//int expr_count = (argc - 3) / 3;
 	int* results = (int*)malloc(sizeof(int) * expr_count);
         if (!results) {
         	printf("Ошибка памяти\n");

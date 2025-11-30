@@ -29,12 +29,12 @@ int calculate(int a, char op, int b) {
             if (b == 0) {
                 return 1;
             }
-            return remd(a, b);
+            return rem(a, b);
         default:
             return 1;
     }
-
-void decode_and_print(int* results, int count, int key) {
+}
+void decode_and_print(int* results, size_t count, int key) {
     if (!results || count <= 0) {
         printf("Нет данных для декодирования.\n");
         return;
@@ -56,4 +56,5 @@ void decode_and_print(int* results, int count, int key) {
     printf("Результирующая строка: %s\n", str);
 
     free(str);
+    
 }
